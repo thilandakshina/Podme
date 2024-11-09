@@ -10,86 +10,55 @@ jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-
+      
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-
+        
     - name: Restore dependencies
       run: dotnet restore
-
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
-
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-    - name: Run tests
-      run: |
-        dotnet test Podme.Application.Tests/Podme.Application.Tests.csproj \
-          --configuration Release \
-          --logger:"console;verbosity=detailed" \
-          --results-directory:"TestResults" \
-          --collect:"XPlat Code Coverage"
       
+    - name: Build
+      run: dotnet build --configuration Release
+      
+    - name: Test
+      run: |
+        dotnet test \
+          --configuration Release \
+          --no-restore \
+          --verbosity normal \
+          --logger "trx;LogFileName=test-results.trx" \
+          --results-directory TestResults
+          
     - name: Upload test results
       uses: actions/upload-artifact@v3
       if: always()
       with:
         name: test-results
         path: TestResults
-        
-    - name: Build Docker image
-      if: success()
-      run: |
-        docker build . --file Dockerfile --tag podme:latest
-        docker image ls
-  deploy-dev:
-    name: Deploy to Dev Environment
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
 
     - name: Login to Docker Hub
+      if: github.event_name != 'pull_request'
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_TOKEN }}
-
-    - name: Build and push Docker image
+        
+    - name: Build and push Docker image for dev
+      if: github.ref == 'refs/heads/dev' && github.event_name != 'pull_request'
       uses: docker/build-push-action@v5
       with:
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/podme:dev
 
-  deploy-prod:
-    name: Deploy to Production
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_TOKEN }}
-
-    - name: Build and push Docker image
+    - name: Build and push Docker image for main
+      if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
       uses: docker/build-push-action@v5
       with:
-        push: true        
+        push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/podme:latest
