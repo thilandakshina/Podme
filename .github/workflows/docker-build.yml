@@ -23,16 +23,18 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
       
-    - name: Build with dotnet
+    - name: Build
       run: dotnet build --configuration Release
       
-    - name: Run tests
+    - name: Test
       run: |
-        dotnet test Podme.Application.Tests/Podme.Application.Tests.csproj \
+        dotnet test \
           --configuration Release \
-          --logger:"console;verbosity=detailed" \
-          --results-directory:"TestResults" \
-          --collect:"XPlat Code Coverage"
+          --no-restore \
+          --verbosity normal \
+          --logger "trx;LogFileName=test-results.trx" \
+          --collect:"XPlat Code Coverage" \
+          --results-directory TestResults
       
     - name: Upload test results
       uses: actions/upload-artifact@v3
