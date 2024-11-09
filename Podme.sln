@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Podme.Infrastructure", "Podme.Infrastructure\Podme.Infrastructure.csproj", "{4633DA55-9B9E-4E92-8993-54B26A2E6F14}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Podme.Domain", "Podme.Domain\Podme.Domain.csproj", "{EADD7E67-E4BD-48C7-9891-1C029250EFA0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Podme.Application", "Podme.Application\Podme.Application.csproj", "{E6AA4370-2C82-45CC-B523-DE74E0DD0524}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Podme.API", "Podme.API\Podme.API.csproj", "{FAC9A644-8EC2-4F88-800E-6C1D982BA506}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4E6A99A3-E0AD-465A-90AC-1052E1B72B38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Podme.Application.Tests", "Podme.Application.Tests\Podme.Application.Tests.csproj", "{ED0D7047-CEE8-4917-9EB1-893460B3A5B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4633DA55-9B9E-4E92-8993-54B26A2E6F14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4633DA55-9B9E-4E92-8993-54B26A2E6F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4633DA55-9B9E-4E92-8993-54B26A2E6F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4633DA55-9B9E-4E92-8993-54B26A2E6F14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EADD7E67-E4BD-48C7-9891-1C029250EFA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EADD7E67-E4BD-48C7-9891-1C029250EFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EADD7E67-E4BD-48C7-9891-1C029250EFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EADD7E67-E4BD-48C7-9891-1C029250EFA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6AA4370-2C82-45CC-B523-DE74E0DD0524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6AA4370-2C82-45CC-B523-DE74E0DD0524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6AA4370-2C82-45CC-B523-DE74E0DD0524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6AA4370-2C82-45CC-B523-DE74E0DD0524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAC9A644-8EC2-4F88-800E-6C1D982BA506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAC9A644-8EC2-4F88-800E-6C1D982BA506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAC9A644-8EC2-4F88-800E-6C1D982BA506}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAC9A644-8EC2-4F88-800E-6C1D982BA506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED0D7047-CEE8-4917-9EB1-893460B3A5B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED0D7047-CEE8-4917-9EB1-893460B3A5B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED0D7047-CEE8-4917-9EB1-893460B3A5B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED0D7047-CEE8-4917-9EB1-893460B3A5B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ED0D7047-CEE8-4917-9EB1-893460B3A5B8} = {4E6A99A3-E0AD-465A-90AC-1052E1B72B38}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1EB5588F-39EE-420F-A6EC-E768D19F28FE}
+	EndGlobalSection
+EndGlobal

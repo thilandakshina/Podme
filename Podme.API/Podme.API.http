@@ -1,0 +1,6 @@
+@Podme.API_HostAddress = http://localhost:5187
+
+GET {{Podme.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
