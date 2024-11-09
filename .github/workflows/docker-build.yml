@@ -28,34 +28,25 @@ jobs:
         java-version: 17
         distribution: 'zulu'
 
-    - name: Cache SonarCloud packages
-      uses: actions/cache@v3
-      with:
-        path: ~\sonar\cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sonar
-
     - name: Install SonarCloud scanner
       run: |
         dotnet tool install --global dotnet-sonarscanner
         dotnet tool install --global dotnet-coverage
 
-    # Using SonarCloud action instead of direct scanner
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
+    - name: Begin SonarCloud analysis
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        args: >
-          -Dsonar.projectKey=thilandakshina_Podme
-          -Dsonar.organization=thilandakshina-github
-          -Dsonar.sources=.
-          -Dsonar.cs.vstest.reportsPaths=**/TestResults/*.trx
-          -Dsonar.cs.opencover.reportsPaths=**/TestResults/**/coverage.opencover.xml
-          -Dsonar.coverage.exclusions=**Test*.cs
-          -Dsonar.sourceEncoding=UTF-8
-          -Dsonar.verbose=true
+      run: |
+        dotnet sonarscanner begin \
+        /k:"thilandakshina_Podme" \
+        /o:"thilandakshina-1" \
+        /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+        /d:sonar.host.url="https://sonarcloud.io" \
+        /d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" \
+        /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" \
+        /d:sonar.coverage.exclusions="**Test*.cs" \
+        /d:sonar.sourceEncoding="UTF-8"
         
     - name: Restore dependencies
       run: dotnet restore
@@ -71,6 +62,12 @@ jobs:
         --collect:"XPlat Code Coverage;Format=opencover" \
         --logger trx \
         --results-directory TestResults
+
+    - name: End SonarCloud analysis
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
     - name: Upload test results
       uses: actions/upload-artifact@v3
