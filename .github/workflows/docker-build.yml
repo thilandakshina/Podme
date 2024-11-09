@@ -24,12 +24,27 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release
       
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: |
+        dotnet test \
+          --configuration Release \
+          --no-restore \
+          --verbosity normal \
+          --logger "trx;LogFileName=test-results.trx" \
+          --collect:"XPlat Code Coverage" \
+          --results-directory TestResults
       
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-results
+        path: TestResults
+        
     - name: Build Docker image
+      if: success()
       run: |
         docker build . --file Dockerfile --tag podme:latest
         docker image ls
