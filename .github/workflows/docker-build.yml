@@ -23,13 +23,26 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
       
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
       
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Run tests
+      run: |
+        dotnet test Podme.Application.Tests/Podme.Application.Tests.csproj \
+          --configuration Release \
+          --logger:"console;verbosity=detailed" \
+          --results-directory:"TestResults" \
+          --collect:"XPlat Code Coverage"
       
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-results
+        path: TestResults
+        
     - name: Build Docker image
+      if: success()
       run: |
         docker build . --file Dockerfile --tag podme:latest
         docker image ls
