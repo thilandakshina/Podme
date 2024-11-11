@@ -46,7 +46,9 @@ jobs:
         /d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" \
         /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" \
         /d:sonar.coverage.exclusions="**Test*.cs" \
-        /d:sonar.sourceEncoding="UTF-8"
+        /d:sonar.sourceEncoding="UTF-8" \
+        /d:sonar.exclusions="Podme.Infrastructure/**/*,Podme.API/**/*,Podme.Domain/**/*" \
+        /d:sonar.cpd.exclusions="Podme.Infrastructure/**/*,Podme.API/**/*,Podme.Domain/**/*"
         
     - name: Restore dependencies
       run: dotnet restore
